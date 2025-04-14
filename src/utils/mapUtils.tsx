@@ -89,10 +89,10 @@ export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2
 
 export const calculateFare = (distance: number) => {
     const rateStructure = {
-        bike: { baseFare: 10, perKmRate: 5, minimumFare: 25 },
-        auto: { baseFare: 15, perKmRate: 7, minimumFare: 30 },
-        cabEconomy: { baseFare: 20, perKmRate: 10, minimumFare: 50 },
-        cabPremium: { baseFare: 30, perKmRate: 15, minimumFare: 70 },
+        bike: { baseFare: 10, perKmRate: 2, minimumFare: 15 },
+        auto: { baseFare: 15, perKmRate: 4, minimumFare: 50 },
+        cabEconomy: { baseFare: 20, perKmRate: 7, minimumFare: 70 },
+        cabPremium: { baseFare: 30, perKmRate: 9, minimumFare: 100 },
     };
 
     const fareCalculation = (baseFare: number, perKmRate: number, minimumFare: number) => {
@@ -106,6 +106,47 @@ export const calculateFare = (distance: number) => {
         cabEconomy: fareCalculation(rateStructure.cabEconomy.baseFare, rateStructure.cabEconomy.perKmRate, rateStructure.cabEconomy.minimumFare),
         cabPremium: fareCalculation(rateStructure.cabPremium.baseFare, rateStructure.cabPremium.perKmRate, rateStructure.cabPremium.minimumFare),
     };
+}
+
+export const calculateEstimateDropTime = (distance : number) => {
+    const avgSpeeds : Record<string,number> = {
+        bike : 35,
+        auto : 30,
+        cabEconomy : 32,
+        cabPremium : 40
+    };
+
+    const formatTime = (min : number) => {
+        const hrs = Math.floor(min/60);
+        const mins = min % 60 ;
+
+        let res = '';
+        if(hrs > 0) res += `${hrs} Hr `;
+        if(mins > 0 || hrs === 0) res+= `${mins} Min`;
+        
+        return res.trim();
+    }
+
+    const dropTimeCalculation = (vehicleType : string) => {
+        const speed = avgSpeeds[vehicleType] || 30;
+    
+        const timeInHours = distance / speed;
+        const timeInMinutes = Math.ceil(timeInHours * 60);
+        const currentTime = new Date();
+        const dropTime = new Date(currentTime.getTime() + timeInMinutes * 60000);
+    
+        return{
+          etaTime : formatTime(timeInMinutes),
+          dropTime : dropTime.toLocaleTimeString([],{hour : '2-digit' , minute : '2-digit'})
+        } 
+    }
+
+    return {
+       bike :  dropTimeCalculation('bike'),
+       auto : dropTimeCalculation('auto'),
+       cabEconomy : dropTimeCalculation('cabEconomy'),
+       cabPremium : dropTimeCalculation('cabPremium')
+    }
 }
 
 function quadraticBezierCurve(p1: any, p2: any, controlPoint: any, numPoints: any) {

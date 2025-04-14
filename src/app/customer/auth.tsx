@@ -21,13 +21,16 @@ import { signin } from "@/service/authService";
 const CustomerAuth = () => {
   const {updateAccessToken} = useWS();
   const [phone, setPhone] = useState("");
+  const [loading,setLoading] = useState(false);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!phone && phone.length !== 10) {
       Alert.alert("Please Enter your 10 digit phone number");
       return;
     }
-    signin({role : 'customer',phone},updateAccessToken)
+    setLoading(true)
+    await signin({role : 'customer',phone},updateAccessToken)
+    setLoading(false)
   };
 
   return (
@@ -74,8 +77,8 @@ const CustomerAuth = () => {
         <CustomButton
           title="NEXT"
           onPress={handleNext}
-          loading={false}
-          disabled={phone.length < 10}
+          loading={loading}
+          disabled={phone.length < 10 || loading}
         />
       </View>
     </SafeAreaView>

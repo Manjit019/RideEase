@@ -21,13 +21,21 @@ import { signin } from "@/service/authService";
 const RiderAuth = () => {
   const {updateAccessToken} = useWS();
   const [phone, setPhone] = useState("");
+    const [loading,setLoading] = useState(false);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!phone && phone.length !== 10) {
       Alert.alert("Please Enter your 10 digit phone number");
       return;
     }
-    signin({role : 'rider',phone},updateAccessToken)
+    setLoading(true);
+    try {
+      await signin({role : 'rider',phone},updateAccessToken)
+    } catch (error) {
+      console.log("Error Signin");
+    } finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -82,8 +90,8 @@ const RiderAuth = () => {
         <CustomButton
           title="NEXT"
           onPress={handleNext}
-          loading={false}
-          disabled={phone.length < 10}
+          loading={loading}
+          disabled={phone.length < 10 || loading}
         />
       </View>
     </SafeAreaView>

@@ -4,7 +4,7 @@ import { useRoute } from "@react-navigation/native";
 import { useUserStore } from "@/store/userStore";
 import { rideStyles } from "@/styles/rideStyles";
 import { StatusBar } from "expo-status-bar";
-import { calculateFare } from "@/utils/mapUtils";
+import { calculateEstimateDropTime, calculateFare } from "@/utils/mapUtils";
 import RoutesMap from "@/components/customer/RoutesMap";
 import CustomText from "@/components/shared/CustomText";
 import { ScrollView } from "react-native-gesture-handler";
@@ -27,14 +27,15 @@ const RideBooking = () => {
     () => calculateFare(parseFloat(item?.distanceInKm)),
     [item?.distanceInKm]
   );
+  const dropTimes = useMemo(()=> calculateEstimateDropTime(parseFloat(item?.distanceInKm)) ,[item?.distanceInKm])
 
   const rideOptions:any = useMemo(() => {
      return [
       {
         type: "Bike",
         seats: 1,
-        time: "1 min",
-        dropTime: "4:28 pm",
+        time: dropTimes?.bike?.etaTime,
+        dropTime: dropTimes?.bike?.dropTime,
         price: farePrices?.bike,
         isFasted: true,
         icon: require("@/assets/icons/bike.png"),
@@ -42,24 +43,24 @@ const RideBooking = () => {
       {
         type: "Auto",
         seats: 3,
-        time: "1 min",
-        dropTime: "4:30 pm",
+        time: dropTimes?.auto?.etaTime,
+        dropTime: dropTimes?.auto?.dropTime,
         price: farePrices.auto,
         icon: require("@/assets/icons/auto.png"),
       },
       {
         type: "Cab Economy",
         seats: 4,
-        time: "1 min",
-        dropTime: "4:30 pm",
+        time: dropTimes?.cabEconomy?.etaTime,
+        dropTime: dropTimes?.cabEconomy?.dropTime,
         price: farePrices.cabEconomy,
         icon: require("@/assets/icons/cab.png"),
       },
       {
         type: "Cab Premium",
         seats: 4,
-        time: "1 min",
-        dropTime: "4:30 pm",
+        time: dropTimes?.cabPremium?.etaTime,
+        dropTime: dropTimes?.cabPremium?.dropTime,
         price: farePrices.cabPremium,
         icon: require("@/assets/icons/cab_premium.png"),
       },

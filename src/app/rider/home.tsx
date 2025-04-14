@@ -82,13 +82,12 @@ const RiderHome = () => {
     };
   }, [onDuty, on, off, isFocused]);
 
-  console.log(rideOffers);
   
 
   const removeRide = (id: string) => {
-    // setRideOffers((prevOffers) =>
-    //   prevOffers.filter((offer) => offer._id !== id)
-    // );
+    setRideOffers((prevOffers) =>
+      prevOffers.filter((offer) => offer._id !== id)
+    );
   };
 
   const renderRides = ({ item }: any) => {

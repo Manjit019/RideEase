@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     borderColor: "#555",
     borderRadius: 6,
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 3,
   },
   input: {
     fontSize: RFValue(13),
