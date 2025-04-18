@@ -151,7 +151,7 @@ const LiveRide = () => {
               "Congratulations!",
               "You have completed your milestone."
             );
-            setTodayEarning(parseFloat(rideData?.fare))
+            setTodayEarning(rideData?.fare);
             resetAndNavigate("/rider/home");
           } else {
             Alert.alert(

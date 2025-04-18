@@ -138,7 +138,7 @@ const RiderHeader = () => {
           ]}
         >
           <CustomText fontFamily="Bold" style={{ color: "#21ff62" }}>
-            ₹{todayEarning}
+            ₹{todayEarning.toFixed(2)}
           </CustomText>
           <Ionicons
             name="caret-down-circle-sharp"

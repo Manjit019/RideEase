@@ -42,14 +42,14 @@ const LiveTrackingSheet: FC<{ item: RideItem }> = ({ item }) => {
             />
           )}
           <View style={{ marginLeft: 10 }}>
-            <CustomText fontSize={10} fontFamily="Medium">
+            <CustomText fontSize={12} fontFamily="Medium">
               {item?.status === "START"
-                ? "Rider near you"
+                ? "Rider Near You"
                 : item?.status === "ARRIVED"
                 ? "HAPPY JOURNEY😊"
-                : "Ride Complete ✅"}
+                : "Ride Completed ✅"}
             </CustomText>
-            <CustomText fontFamily="Medium" fontSize={12}>
+            <CustomText fontFamily="Bold" fontSize={14}>
               {item.status === "START" ? `OTP - ${item?.otp}` : "----"}
             </CustomText>
           </View>
