@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { FC, memo, useEffect, useRef, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { useUserStore } from "@/store/userStore";
 import { useWS } from "@/service/WSProvider";
@@ -50,55 +50,57 @@ const DraggableMap: FC<{ height: number }> = ({ height }) => {
   }, [mapRef, isFocused]);
 
   //REALTIME NEARBY RIDERS
-  // useEffect(()=> {
-  //   if(location?.latitude && location?.longitude && isFocused){
-  //     emit('subscribeToZone',{
-  //       latitude : location.latitude,
-  //       longitude : location.longitude,
-  //     });
-  //     on('nearbyriders',(riders : any[])=> {
-  //       const updatedMarkers = riders.map((rider)=> (
-  //         {
-  //           id : rider.id,
-  //           latitude : rider.coords.latitude,
-  //           longitude : rider.coords.longitude,
-  //           type : 'rider',
-  //           rotation : rider.coords.heading,
-  //           visible : true
-  //         }
-  //       ));
-  //       setMarkers(updatedMarkers);
-  //     })
-  //   }
+  useEffect(()=> {
+    if(location?.latitude && location?.longitude && isFocused){
+      emit('subscribeToZone',{
+        latitude : location.latitude,
+        longitude : location.longitude,
+      });
+      on('nearbyriders',(riders : any[])=> {
+        const updatedMarkers = riders.map((rider)=> (
+          {
+            id : rider.id,
+            latitude : rider.coords.latitude,
+            longitude : rider.coords.longitude,
+            type : 'rider',
+            rotation : rider.coords.heading,
+            visible : true
+          }
+        ));
+        setMarkers(updatedMarkers);
+      })
+    }
 
-  //   return () => {
-  //     off("nearbyriders");
-  //   }
-  // },[location,emit,on,off,isFocused])
+    return () => {
+      off("nearbyriders");
+    }
+  },[location,emit,on,off,isFocused])
 
   //SIMULATING NEARBY RIDERS start
-  const generateRandomMarkers = () => {
-    if (!location?.latitude || !location.longitude || outOfRange) return;
-    const types = ["bike", "auto", "cab"];
-    const newMarkers = Array.from({ length: 20 }, (_, index) => {
-      const randomType = types[Math.floor(Math.random() * types.length)];
-      const randomRotation = Math.floor(Math.random() * 360);
+  // const generateRandomMarkers = useCallback(() => {
+  //   if (!location?.latitude || !location.longitude || outOfRange) return;
+  //   const types = ["bike", "auto", "cab"];
+  //   const newMarkers = Array.from({ length: 20 }, (_, index) => {
+  //     const randomType = types[Math.floor(Math.random() * types.length)];
+  //     const randomRotation = Math.floor(Math.random() * 360);
 
-      return {
-        id: index,
-        latitude: location?.latitude + (Math.random() - 0.5) * 0.01,
-        longitude: location?.longitude + (Math.random() - 0.5) * 0.01,
-        type: randomType,
-        rotation: randomRotation,
-        visible: true,
-      };
-    });
-    setMarkers(newMarkers);
-  };
-  useEffect(() => {
-    generateRandomMarkers();
-  }, [location]);
+  //     return {
+  //       id: index,
+  //       latitude: location?.latitude + (Math.random() - 0.5) * 0.01,
+  //       longitude: location?.longitude + (Math.random() - 0.5) * 0.01,
+  //       type: randomType,
+  //       rotation: randomRotation,
+  //       visible: true,
+  //     };
+  //   });
+  //   setMarkers(newMarkers);
+  // },[location]);
+  
+  // useEffect(() => {
+  //   generateRandomMarkers();
+  // }, [location]);
   //end
+  
 
   const handleRegionChangeComplete = async (newRegion: Region) => {
     const address = await reverseGeocode(
@@ -168,7 +170,7 @@ const DraggableMap: FC<{ height: number }> = ({ height }) => {
             (marker: any) =>
               marker?.latitude && marker?.longitude && marker?.visible
           )
-          .map((marker: any, index: number) => {
+          .map((marker: any, index: number) => (
             <Marker
               key={index}
               zIndex={index + 1}
@@ -193,8 +195,8 @@ const DraggableMap: FC<{ height: number }> = ({ height }) => {
                   style={{ height: 40, width: 40, resizeMode: "contain" }}
                 />
               </View>
-            </Marker>;
-          })}
+            </Marker>
+          ))}
       </MapView>
 
       <View style={mapStyles.centerMarkerContainer}>

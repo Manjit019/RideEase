@@ -133,7 +133,7 @@ export const rideStyles = StyleSheet.create({
         paddingVertical: 10,
         borderColor: '#ddd',
         backgroundColor: '#fff',
-        marginTop : 30
+        marginTop : 30,
     },
     cancelButton: {
         flex: 1,

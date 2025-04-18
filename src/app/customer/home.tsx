@@ -41,12 +41,19 @@ const CustomerHome = () => {
       <BottomSheet
         ref={bottomSheetRef}
         index={1}
-        handleIndicatorStyle={{ backgroundClip: "#ccc" }}
+        handleIndicatorStyle={{ backgroundColor: "#999" ,}}
         enableOverDrag={false}
         enableDynamicSizing={false}
         style={{zIndex : 5}}
         snapPoints={snapPoint}
         onChange={handleSheetChanges}
+        backgroundStyle={{
+          elevation : 9,
+          shadowColor : '#000',
+          shadowOffset : {height : 1,width : 1},
+          shadowOpacity : 0.8,
+          shadowRadius : 10
+        }}
       >
         <BottomSheetScrollView
           contentContainerStyle={homeStyles.scrollContainer}

@@ -23,7 +23,7 @@ const RiderHome = () => {
     getMyRides(false);
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
     let locationSubscription: any;
     const startLocationUpdates = async () => {
       const { status } = await Location.getForegroundPermissionsAsync();
@@ -65,8 +65,9 @@ const RiderHome = () => {
   }, [onDuty, isFocused]);
 
   useEffect(() => {
-    if (onDuty && isFocused) {
+    if (onDuty && isFocused) { 
       on("rideOffer", (rideDetails: any) => {
+     
         setRideOffers((prevOffers) => {
           const existingIds = new Set(prevOffers?.map((offer) => offer?._id));
           if (!existingIds.has(rideDetails?._id)) {
@@ -115,7 +116,7 @@ const RiderHome = () => {
               style={riderStyles.emptyImage}
             />
             <CustomText
-              variant="h6"
+              variant="h7"
               fontFamily="Regular"
               style={{ textAlign: "center",opacity : 0.7 }}
             >

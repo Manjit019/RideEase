@@ -38,10 +38,10 @@ const SearchingRideSheet: FC<{ item: RideItem }> = ({ item }) => {
             />
           )}
           <View style={{ marginLeft: 10 }}>
-            <CustomText fontSize={10} fontFamily="Medium">
+            <CustomText fontSize={10} fontFamily="Regular">
               Looking for your{" "}
             </CustomText>
-            <CustomText fontFamily="Medium" fontSize={12}>
+            <CustomText fontFamily="Medium" fontSize={12} style={{ textTransform : 'capitalize'}}>
               {item?.vehicle} ride
             </CustomText>
           </View>
@@ -63,7 +63,7 @@ const SearchingRideSheet: FC<{ item: RideItem }> = ({ item }) => {
           </CustomText>
         </View>
 
-        <CustomText fontSize={10} fontFamily="SemiBold">
+        <CustomText fontSize={10} fontFamily="SemiBold" >
           Payment Via Cash
         </CustomText>
       </View>
@@ -76,7 +76,7 @@ const SearchingRideSheet: FC<{ item: RideItem }> = ({ item }) => {
 
           <View
             style={[
-              commonStyles.flexRowBetween,
+              commonStyles.flexRow,
               { marginVertical: 15, width: "90%" },
             ]}
           >
@@ -88,7 +88,7 @@ const SearchingRideSheet: FC<{ item: RideItem }> = ({ item }) => {
               {item?.pickup?.address}
             </CustomText>
           </View>
-          <View style={[commonStyles.flexRowBetween, { width: "90%" }]}>
+          <View style={[commonStyles.flexRow, { width: "90%" }]}>
             <Image
               source={require("@/assets/icons/drop_marker.png")}
               style={rideStyles.pinIcon}

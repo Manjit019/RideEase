@@ -75,14 +75,14 @@ const Main: FC = () => {
 
   return (
     <View style={[commonStyles.container, { backgroundColor: "#FF9001" }]}>
-      {/* <StatusBar style="light" backgroundColor="#FF9001" translucent={false} /> */}
+      <StatusBar style="light" backgroundColor="#FF9001" translucent={false} />
 
       <Image
         source={require("@/assets/images/logo_t.png")}
         style={splashStyles.img}
       />
       <CustomText variant="h6" fontFamily="Medium" style={splashStyles.text}>
-        Made in India 🩵
+        Made with 💖 in India
       </CustomText>
     </View>
   );

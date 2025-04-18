@@ -42,7 +42,7 @@ const LocationBar = () => {
             {location?.address || "Getting address..."}
           </CustomText>
         </TouchableOpacity>
-        <TouchableOpacity style={uiStyles.btn}>
+        <TouchableOpacity style={uiStyles.btn} onPress={()=> router.navigate("/notifications")}>
           <Ionicons
             name="notifications-outline"
             size={RFValue(20)}

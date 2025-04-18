@@ -23,6 +23,7 @@ const RideBooking = () => {
   const [selectedOption, setSelectedOption] = useState("Bike");
   const [loading, setLoading] = useState(false);
 
+
   const farePrices = useMemo(
     () => calculateFare(parseFloat(item?.distanceInKm)),
     [item?.distanceInKm]

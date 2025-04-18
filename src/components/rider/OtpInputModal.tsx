@@ -87,7 +87,7 @@ export default OtpInputModal;
 const styles = StyleSheet.create({
   otpContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     margin: 20,
   },
   otpInput: {
@@ -101,15 +101,15 @@ const styles = StyleSheet.create({
     fontFamily: "SemiBold",
   },
   confirmButton: {
-    backgroundColor: "#007aff",
+    backgroundColor: "#0DFF00",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 16,
     alignItems: "center",
     margin: 20,
   },
   confirmButtonText: {
-    color: "#fff",
+    color: "#888",
     fontSize: 16,
     fontWeight: "bold",
     fontFamily: "Medium",

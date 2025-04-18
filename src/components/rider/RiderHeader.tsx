@@ -24,10 +24,11 @@ import CustomText from "../shared/CustomText";
 import { styles } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/BottomSheetFlashList";
 import { riderStyles } from "@/styles/riderStyles";
 import { uiStyles } from "@/styles/uiStyles";
+import { router } from "expo-router";
 
 const RiderHeader = () => {
   const { emit, disconnect } = useWS();
-  const { setLocation, setOnDuty, onDuty } = useRiderStore();
+  const { setLocation, setOnDuty, onDuty ,todayEarning ,resetEarning} = useRiderStore();
   const isFocused = useIsFocused();
 
   const toggleOnDuty = async () => {
@@ -66,6 +67,8 @@ const RiderHeader = () => {
     }
   }, [isFocused, onDuty]);
 
+  useEffect(()=> resetEarning() ,[])
+
   return (
     <>
       <View style={riderStyles.headerContainer}>
@@ -102,12 +105,14 @@ const RiderHeader = () => {
               }
               style={rideStyles.icon}
             />
-          </TouchableOpacity>
+          </TouchableOpacity  >
           {/* <View style={[uiStyles.btn, { padding: 6 }]}> */}
           <Ionicons
             name="notifications-outline"
             size={RFValue(22)}
             color="#000"
+
+            onPress={()=>router.navigate('/notifications')}
           />
           {/* </View> */}
         </View>
@@ -133,7 +138,7 @@ const RiderHeader = () => {
           ]}
         >
           <CustomText fontFamily="Bold" style={{ color: "#21ff62" }}>
-            ₹2340.56
+            ₹{todayEarning}
           </CustomText>
           <Ionicons
             name="caret-down-circle-sharp"

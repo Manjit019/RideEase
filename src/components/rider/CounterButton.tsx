@@ -29,11 +29,11 @@ const CounterButton: FC<CounterBtnProps> = ({
           duration={initialCount}
           size={30}
           strokeWidth={3}
-          colors={["#004555", "#ff5006", "#ccff23", "#ff9005", "#a53000"]}
-          colorsTime={[12,7,4,2,0]}
+          colors={["#87F700", "#01F2CB", "#008CFF", "#f74810", "#a53000"]}
+          colorsTime={[10,8,6,4,0]}
         >
           {({ remainingTime }) => (
-            <CustomText fontFamily="SemiBold" fontSize={10}>
+            <CustomText style={styles.text} fontFamily="SemiBold" fontSize={10}>
               {remainingTime}
             </CustomText>
           )}
@@ -50,13 +50,15 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 50,
     backgroundColor: Colors.primary,
+    paddingVertical : 8,
+    paddingHorizontal : 12
   },
   counter: {
-    backgroundColor: "#000",
+    backgroundColor: "#fff",
     borderRadius: 50,
   },
   text: {
-    color: "#222",
+    color: "#444",
     marginRight: 10,
   },
 });

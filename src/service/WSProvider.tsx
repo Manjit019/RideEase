@@ -41,6 +41,7 @@ export const WSProvider:FC<{children : React.ReactNode}> = ({children}) => {
                 extraHeaders : {
                     access_token : socketAccessToken || "",
                 },
+            
             });
 
             socket.current.on("connect_error",(error) => {

@@ -10,7 +10,7 @@ interface PhoneInputProps {
     value: string;
     onChangeText: (text: string) => void;
     onFocus?: () => void;
-    onBlur?: () => void
+    onBlur?: () => void;
 }
 
 interface CustomTextProps {

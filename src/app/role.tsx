@@ -18,7 +18,7 @@ const Role = () => {
 
   return (
     <View style={roleStyles.container}>
-      <StatusBar style="light" backgroundColor="#fff" translucent={false} />
+      <StatusBar style="dark" backgroundColor="#fff" translucent={false} />
 
       <View style={roleStyles.header}>
         <Image
@@ -48,7 +48,7 @@ const Role = () => {
                   fontFamily="SemiBold"
                   style={roleStyles.title}
                 >
-                  Customer
+                  CUSTOMER
                 </CustomText>
                 <CustomText
                   variant="h7"
@@ -59,7 +59,7 @@ const Role = () => {
                 </CustomText>
               </View>
               <Ionicons
-                name="chevron-forward-circle-outline"
+                name="chevron-forward"
                 size={25}
                 color="#ccc"
               />
@@ -84,7 +84,7 @@ const Role = () => {
                   fontFamily="SemiBold"
                   style={roleStyles.title}
                 >
-                  Rider
+                  RIDER
                 </CustomText>
                 <CustomText
                   variant="h7"
@@ -95,7 +95,7 @@ const Role = () => {
                 </CustomText>
               </View>
               <Ionicons
-                name="chevron-forward-circle-outline"
+                name="chevron-forward"
                 size={25}
                 color="#ccc"
               />

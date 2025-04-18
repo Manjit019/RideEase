@@ -141,10 +141,20 @@ export const uiStyles = StyleSheet.create({
         height: 20,
         resizeMode: 'contain'
     },
+    mapPinIconContainer : {
+        backgroundColor : '#f2f2f2',
+        borderRadius : 30,
+        padding : 14,
+        width: 30,
+        height: 30,
+        justifyContent : 'center',
+        alignItems : 'center',
+        marginRight: 10,
+        borderWidth : 1,
+        borderColor : 'rgba(205, 205, 205, 0.45)',
+    },
     footerBtn : {
         padding : 10,
-        // borderWidth : 1,
-        // borderColor : Colors.iosColor,
         backgroundColor : Colors.primary,
         borderRadius : 16,
         marginBottom : 14

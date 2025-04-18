@@ -2,7 +2,6 @@ import { View, Text, Platform, ActivityIndicator, Alert } from "react-native";
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { screenHeight } from "@/utils/Constants";
 import { useWS } from "@/service/WSProvider";
-import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { rideStyles } from "@/styles/rideStyles";
 import LiveTrackingMap from "@/components/customer/LiveTrackingMap";
@@ -11,22 +10,27 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import SearchingRideSheet from "@/components/customer/SearchingRideSheet";
 import LiveTrackingSheet from "@/components/customer/LiveTrackingSheet";
 import { resetAndNavigate } from "@/utils/Helpers";
+import { useRoute } from "@react-navigation/native";
 
 const androidHeights = [screenHeight * 0.22, screenHeight * 0.52];
 const iosHeights = [screenHeight * 0.2, screenHeight * 0.5];
 
 const LiveRide = () => {
+  const route = useRoute();
+  const {id} =  route.params as any;
   const {emit,on,off} = useWS();
   const [rideData, setRideData] = useState<any>(null);
   const [riderCoords, setRiderCoords] = useState<any>(null);
-  const route = useRoute() as any;
-  const params = route.params || {};
-  const id = params?.id;
   const bottomSheetRef = useRef(null);
+
   const snapPoints = useMemo(
     () => (Platform.OS === "ios" ? iosHeights : androidHeights),
     []
   );
+
+  console.log(id);
+  
+
   const [mapHeight, setMapHeight] = useState(snapPoints[0]);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -37,15 +41,19 @@ const LiveRide = () => {
     setMapHeight(height);
   }, []);
 
+
+
   useEffect(() => {
     
     if(id){
       emit('subscribeRide',id);
 
+      emit('subscribeToZone',riderCoords)
+
       on('rideData',(data) => {
         setRideData(data);
         if(data?.status === 'SEARCHING_FOR_RIDER'){
-          emit('searchRider',id);
+          emit('searchrider',id);
         }
       });
 
@@ -53,14 +61,14 @@ const LiveRide = () => {
         setRideData(data);
       });
 
-      on('rideCanceled',(error)=>{
+      on('rideCanceled',()=>{
         resetAndNavigate('/customer/home');
         Alert.alert("Ride Cancelled");
       });
 
       on('error',(error) => {
         resetAndNavigate('/customer/home');
-        Alert.alert("Oops!","No Riders Found!")
+        Alert.alert( error?.message ||"Oops!","No Riders Found!")
       })
 
     }
@@ -72,6 +80,7 @@ const LiveRide = () => {
       off('error');
     }
   }, [id,emit,on,off])
+
   
  
   useEffect(()=>{

@@ -4,10 +4,14 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { WSProvider } from "@/service/WSProvider";
 import { StatusBar } from "react-native";
 import { Colors } from "@/utils/Constants";
+import NoInternet from "@/components/shared/NoInternet";
 
 const Layout = () => {
   return (
     <WSProvider>
+      
+      <NoInternet />
+
       <Stack
         screenOptions={{
           headerShown: false,
@@ -15,7 +19,7 @@ const Layout = () => {
         }}
         initialRouteName="index"
       >
-        <Stack.Screen name="index" />
+        <Stack.Screen name="index" options={{animation : "fade"}} />
         <Stack.Screen name="role" />
         <Stack.Screen name="customer/home" />
         <Stack.Screen name="customer/auth" />
@@ -25,6 +29,7 @@ const Layout = () => {
         <Stack.Screen name="rider/auth" />
         <Stack.Screen name="rider/home" />
         <Stack.Screen name="rider/liveride" />
+        <Stack.Screen name="notifications"/>
       </Stack>
     </WSProvider>
   );

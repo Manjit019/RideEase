@@ -14,7 +14,7 @@ import OtpInputModal from "@/components/rider/OtpInputModal";
 
 const LiveRide = () => {
   const [isOtpModalVisible, setOtpModalVisible] = useState(false);
-  const { setLocation, location, setOnDuty } = useRiderStore();
+  const { setLocation, location, setOnDuty ,setTodayEarning} = useRiderStore();
   const { emit, on, off } = useWS();
   const [rideData, setRideData] = useState<any>(null);
   const route = useRoute() as any;
@@ -83,7 +83,7 @@ const LiveRide = () => {
       on("rideData", (data) => {
         setRideData(data);
       });
-
+      
       on("rideUpdate", (data) => {
         setRideData(data);
       });
@@ -109,7 +109,7 @@ const LiveRide = () => {
 
   return (
     <View style={rideStyles.container}>
-      <StatusBar style="light" backgroundColor="#FF9001" translucent={false} />
+      <StatusBar style="light" backgroundColor={`${rideData?.status === "COMPLETED" ? '#0CE800' : '#FF9001'}`} translucent={false} />
 
       {rideData && (
         <RiderLiveTracking
@@ -126,7 +126,7 @@ const LiveRide = () => {
             latitude: location?.latitude,
             longitude: location?.longitude,
             heading: location?.heading,
-          }}
+          }} 
         />
       )}
 
@@ -142,6 +142,7 @@ const LiveRide = () => {
         onPress={async () => {
           if (rideData?.status === "START") {
             setOtpModalVisible(true);
+            emit('rideAccepted')
             return;
           }
           const isSuccess = await updateRideStatus(rideData?._id, "COMPLETED");
@@ -150,6 +151,7 @@ const LiveRide = () => {
               "Congratulations!",
               "You have completed your milestone."
             );
+            setTodayEarning(parseFloat(rideData?.fare))
             resetAndNavigate("/rider/home");
           } else {
             Alert.alert(

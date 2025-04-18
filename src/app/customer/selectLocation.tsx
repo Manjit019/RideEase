@@ -74,7 +74,7 @@ const LocationSelection = () => {
 
     if (lat1 === lat2 && lon1 === lon2) {
       Alert.alert(
-        "Pickup and drop locations cannot be same. Please select different Location."
+        "Pickup and drop locations cannot be same.","Please select different Location."
       );
       return;
     }
@@ -187,10 +187,12 @@ const LocationSelection = () => {
             }}
             style={[commonStyles.flexRow, locationStyles.container]}
           >
+            <View style={uiStyles.mapPinIconContainer}>
             <Image
               source={require("@/assets/icons/map_pin.png")}
-              style={uiStyles.mapPinIcon}
+              style={[uiStyles.mapPinIcon,{marginLeft : 10}]}
             />
+            </View>
             <CustomText fontFamily="Medium" fontSize={12}>
               Select from Map
             </CustomText>
